@@ -1,4 +1,7 @@
-FactoryGirl.define do  factory :tournament do
+FactoryGirl.define do  factory :role do
+    
+  end
+  factory :tournament do
     user nil
   end
   factory :user do
