@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-	root 'tournaments#index'
 
-	devise_for :users
-	resources :users
 	resources :tournaments
+	resources :users
+	devise_for :users
+
+	authenticated :user do
+		root 'tournaments#index', as: :authenticated_root
+	end
 end

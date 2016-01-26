@@ -6,3 +6,9 @@
 @import "neat";
 @import "base/base";
 @import "refills/flashes";
+@import "refills/navigation";
+@import "refills/footer-2";
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
