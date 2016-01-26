@@ -1,9 +1,10 @@
-FactoryGirl.define do  factory :role do
+FactoryGirl.define do  factory :tournament do
     
   end
-  factory :tournament do
-    user nil
+  factory :role do
+    
   end
+
   factory :user do
     name "MyString"
 email "MyString"
