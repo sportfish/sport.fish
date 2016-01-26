@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
   before_action :set_tournament, only: [:show, :edit, :update, :destroy]
+  before_action :check_role, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /tournaments
@@ -23,8 +24,12 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   def create
     @tournament = Tournament.new(tournament_params)
+    user = current_user
+    @tournament.user_id = user.id
 
     if @tournament.save
+      user.add_role :admin, @tournament
+      user.save
       redirect_to @tournament, notice: 'Tournament was successfully created.'
     else
       render :new
@@ -52,8 +57,15 @@ class TournamentsController < ApplicationController
       @tournament = Tournament.find(params[:id])
     end
 
+    def check_role
+      user = current_user
+      unless user.has_role? :admin, @tournament
+        redirect_to root_path, notice: 'You are not a tournament admin.'
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def tournament_params
-      params[:tournament]
+      params.require(:tournament).permit(:name, :location, :start_time)
     end
 end
