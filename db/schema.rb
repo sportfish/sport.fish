@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129161029) do
+ActiveRecord::Schema.define(version: 20160129173013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 20160129161029) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "tournament_id"
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "email"
+    t.string   "token"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "invites", ["tournament_id"], name: "index_invites_on_tournament_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -91,6 +103,7 @@ ActiveRecord::Schema.define(version: 20160129161029) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "invites", "tournaments"
   add_foreign_key "tournament_participations", "tournaments"
   add_foreign_key "tournament_participations", "users"
   add_foreign_key "tournaments", "users"

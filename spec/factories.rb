@@ -1,4 +1,9 @@
-FactoryGirl.define do  factory :participant do
+FactoryGirl.define do  factory :invite do
+    tournament nil
+email "MyString"
+token "MyString"
+  end
+  factory :participant do
     
   end
   factory :admin do

@@ -2,5 +2,12 @@
 
 <%= render 'form' %>
 
+<%= form_for @invite , :url => invites_path do |f| %>
+    <%= f.hidden_field :tournament_id, :value => @invite.tournament_id %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    <%= f.submit 'Send' %>
+<% end %>
+
 <%= link_to 'Show', @tournament %> |
 <%= link_to 'Back', tournaments_path %>
