@@ -24,6 +24,7 @@ class InvitesController < ApplicationController
     @invite = Invite.new(invite_params)
     @invite.sender_id = current_user.id # set the sender to the current user
 
+    # abstract the new/existing user check to invite model or mailer
     if @invite.save
       if invite.recipient != nil
         InviteMailer.existing_user_invite(@invite).deliver # send a notification email
