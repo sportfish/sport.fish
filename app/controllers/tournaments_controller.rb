@@ -27,6 +27,7 @@ class TournamentsController < ApplicationController
     user = current_user
     @tournament.user_id = user.id
 
+    # append admin role to tournament user
     if @tournament.save
       user.add_role :admin, @tournament
       user.save

@@ -1,0 +1,2 @@
+class Admin < TournamentParticipation
+end
