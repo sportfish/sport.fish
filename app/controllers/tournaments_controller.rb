@@ -19,6 +19,7 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1/edit
   def edit
+    @invite = Invite.new
   end
 
   # POST /tournaments
