@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
     rolify
     
     has_many :tournaments
-    has_many :tournament_participations
+    has_many :tournament_participations, dependent: :destroy
 
     has_many :invitations, class_name: 'Invite', foreign_key: 'recipient_id'
     has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
@@ -11,4 +11,9 @@ class User < ActiveRecord::Base
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :trackable, :validatable
+
+    def tournament_participant? tournament_id
+    	tournament = Tournament.find(tournament_id)
+    	tournament.tournament_participations.exists?(user_id: self.id)
+    end
 end

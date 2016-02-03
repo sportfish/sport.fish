@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :join]
   before_action :check_role, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -10,6 +10,8 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1
   def show
+    @participation = current_user.tournament_participations.find_by(tournament_id: @tournament.id)
+    @invite = Invite.new
   end
 
   # GET /tournaments/new
@@ -51,6 +53,17 @@ class TournamentsController < ApplicationController
   def destroy
     @tournament.destroy
     redirect_to tournaments_url, notice: 'Tournament was successfully destroyed.'
+  end
+
+  # GET /tournaments/1/join
+  def join
+    @tournament_participation = @tournament.tournament_participations.build(user_id: current_user.id)
+    if @tournament_participation.save
+      redirect_to @tournament, notice: "You have joined #{@tournament.name}"
+    else
+      flash[:error] = @tournament_participation.errors.full_messages.to_sentence
+      redirect_to @tournament
+    end
   end
 
   private

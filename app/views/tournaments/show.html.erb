@@ -1,5 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @tournament.name %></h1>
+
+<h2>Invite User</h2>
+
+<%= form_for @invite , :url => invites_path do |f| %>
+    <%= f.hidden_field :tournament_id, :value => @invite.tournament_id %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    <%= f.submit 'Send' %>
+<% end %>
+
+<h2>Current Participants</h2>
+<ul>
+	<% @tournament.tournament_participations.each do |participant| %> 
+		<li><%= participant.user.email %></li>
+	<% end %>
+</ul>
+
+<button>
+	<%= link_to "Join Tournament", join_tournament_path(@tournament), method: :post %>
+</button>
+<% if current_user.tournament_participant? @tournament.id %>
+	<button>
+		<%= link_to "Delete Entry", tournament_participation_path(@tournament.id, @participation.id), method: :delete %>
+	</button>
+<% end %>
 
 
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
