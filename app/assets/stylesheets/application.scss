@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+// frameworks and libraries
 @import "normalize-rails";
 @import "bourbon";
 @import "base/grid-settings";
@@ -10,6 +11,6 @@
 @import "refills/footer-2";
 @import "refills/tables";
 
-body {
-  -webkit-font-smoothing: antialiased;
-}
+// application files
+@import "partials/responsive";
+@import "partials/layout";

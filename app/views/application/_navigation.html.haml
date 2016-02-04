@@ -1,0 +1,18 @@
+%header.navigation
+    .navigation-wrapper
+    = link_to "sport.fish", root_path, class: "logo"
+    = link_to "Menu", "#", class: "navigation-menu-button", id: "js-mobile-menu"
+    %nav{role: "navigation"}
+        %ul#js-navigation-menu.navigation-menu.show
+            %li.nav-link= link_to "Tournaments", tournaments_path
+            %li.nav-link= link_to "Contact", page_path("contact")
+            %li.nav-link.more
+                = link_to "More", "#"
+                %ul.submenu
+                    %li= link_to "Submenu Item", "#"
+    .navigation-tools
+        .search-bar
+            %form{:role => "search"}
+                %input{:placeholder => "Enter Search", :type => "search"}/
+                %button{:type => "submit"}
+                    %img{:alt => "Search Icon", :src => "https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon.png"}/
