@@ -1,4 +1,4 @@
-# Sport fish
+# sport.fish
 
 ## Getting Started
 

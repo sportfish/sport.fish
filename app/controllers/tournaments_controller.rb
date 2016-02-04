@@ -5,7 +5,9 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments
   def index
-    @tournaments = Tournament.all
+    # no N+1 query with includes(:user)
+    # @tournaments = Tournament.all
+    @tournaments = Tournament.includes(:user)
   end
 
   # GET /tournaments/1
