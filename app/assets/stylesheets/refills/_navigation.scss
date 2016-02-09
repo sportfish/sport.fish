@@ -265,17 +265,18 @@ header.navigation {
   // Elements on the far right
 
   .navigation-tools {
-    background: #505050;
+    background: $navigation-background;
     clear: both;
     display: block;
     height: $navigation-height;
     padding-left: $navigation-padding / 2;
     padding-right: $navigation-padding;
+    float: right;
 
     @include media($large-screen) {
       background: transparent;
       clear: none;
-      float: right;
+      
     }
   }
 
