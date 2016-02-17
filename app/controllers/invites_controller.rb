@@ -26,7 +26,7 @@ class InvitesController < ApplicationController
 
     # abstract the new/existing user check to invite model or mailer
     if @invite.save
-      if invite.recipient != nil
+      if @invite.recipient != nil
         InviteMailer.existing_user_invite(@invite).deliver # send a notification email
         @invite.recipient.tournaments.push(@invite.tournament) # Add the user to the tournament
       else
