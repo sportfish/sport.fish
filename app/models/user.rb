@@ -12,6 +12,12 @@ class User < ActiveRecord::Base
     devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :trackable, :validatable
 
+
+
+    def self.search(search)
+      where("email LIKE ?", "%#{search}%") 
+    end
+
     def tournament_participant? tournament_id
     	tournament = Tournament.find(tournament_id)
     	tournament.tournament_participations.exists?(user_id: self.id)

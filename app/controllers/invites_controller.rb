@@ -23,16 +23,17 @@ class InvitesController < ApplicationController
   def create
     @invite = Invite.new(invite_params)
     @invite.sender_id = current_user.id # set the sender to the current user
-
+    @tournament = @invite.tournament
     # abstract the new/existing user check to invite model or mailer
     if @invite.save
       if @invite.recipient != nil
-        InviteMailer.existing_user_invite(@invite).deliver # send a notification email
-        @invite.recipient.tournaments.push(@invite.tournament) # Add the user to the tournament
+        InviteMailer.invite_existing_user(@invite).deliver # send a notification email
+        tournament_participation = @tournament.tournament_participations.build(user_id: @invite.recipient_id) # Add the user to the tournament
+        tournament_participation.save
       else
         InviteMailer.invite_user(@invite, new_user_registration_path(:invite_token => @invite.token)).deliver
       end
-      redirect_to @invite, notice: 'Invite was successfully created.'
+      redirect_to @tournament, notice: 'Invite was successfully created.'
     else
       # oh no, creating an new invitation failed
     end
